@@ -1,3 +1,4 @@
+#Tetris
 This is simple tetris game made in pygame.
 
 Description:
