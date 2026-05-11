@@ -1,7 +1,7 @@
 import pygame
 import tkinter
 import random
-import block
+from block import Grid, Block
 
 pygame.init()
 
@@ -66,8 +66,8 @@ font = pygame.font.Font(None, 50)
 SCORE = 0
 text = font.render(f"Score: {SCORE}", True, (255, 255, 255))
 
-grid = block.Grid(GRID_WIDTH, GRID_HEIGHT, BLOCK_COLORS, screen, CELL_SIZE)
-block = block.Block(BLOCK_ROTATIONS[BLOCK_TYPE], BLOCK_COLORS[BLOCK_TYPE], CELL_SIZE, BLOCK_TYPE, screen, grid)
+grid = Grid(GRID_WIDTH, GRID_HEIGHT, BLOCK_COLORS, screen, CELL_SIZE)
+block = Block(BLOCK_ROTATIONS[BLOCK_TYPE], BLOCK_COLORS[BLOCK_TYPE], CELL_SIZE, BLOCK_TYPE, screen, grid)
 
 def drawScreen():
     screen.fill(BACKGROUND_COLOR)
@@ -114,11 +114,10 @@ while run:
     drawScreen()
     if timer == 2 or speed_up:
         timer = 0
-        speed_up = False
         if not block.fall():
             block.updateGrid()
             BLOCK_TYPE = random.choice(BLOCKS)
-            block = block.Block(BLOCK_ROTATIONS[BLOCK_TYPE], BLOCK_COLORS[BLOCK_TYPE], CELL_SIZE, BLOCK_TYPE, screen, grid)
+            block = Block(BLOCK_ROTATIONS[BLOCK_TYPE], BLOCK_COLORS[BLOCK_TYPE], CELL_SIZE, BLOCK_TYPE, screen, grid)
             if not grid.isValid(block, block.x, block.y, block.rotation):
                 run = False
             SCORE = grid.checkRows(SCORE)
